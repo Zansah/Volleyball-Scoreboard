@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volleyball Score Keeper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        /* Scoreboard Layout */
+        .scoreboard {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Individual Score Rectangles */
+        .score {
+            width: 80px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            user-select: none;
+            transition: transform 0.2s;
+            position: relative; 
+        }
+
+      
+        .red {
+            background-color: #D41818;
+        }
+
+        .white {
+            background-color: #ffffff;
+            color: #333;
+            border: 2px solid #ccc;
+        }
+
+        .blue {
+            background-color: #1351CE;
+        }
+
+       
+        .score:hover {
+            transform: scale(1.05);
+        }
+
+        #reset-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #2a9d8f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+
+        #reset-button:hover {
+            background-color: #21867a;
+        }
+    </style>
+</head>
+<body>
+    <div class="scoreboard">
+        <!-- Red Section -->
+        <div class="score red" id="red-left" onclick="handleClick(event, this)">0</div>
+        <div class="score red" id="red-right" onclick="handleClick(event, this)">0</div>
+
+        <!-- White Section -->
+        <div class="score white" id="white-left" onclick="handleClick(event, this)">0</div>
+        <div class="score white" id="white-right" onclick="handleClick(event, this)">0</div>
+
+        <!-- Blue Section -->
+        <div class="score blue" id="blue-left" onclick="handleClick(event, this)">0</div>
+        <div class="score blue" id="blue-right" onclick="handleClick(event, this)">0</div>
+    </div>
+
+    <button id="reset-button" onclick="resetScores()">Reset</button>
+
+    <script>
+        function handleClick(event, element) {
+            const rect = element.getBoundingClientRect();
+            const clickY = event.clientY - rect.top; 
+            const height = rect.height; 
+            let currentValue = parseInt(element.textContent, 10);
+
+            if (clickY < height / 2) {
+                currentValue = (currentValue + 1) % 10; 
+            } else {
+                
+                currentValue = (currentValue - 1 + 10) % 10; 
+            }
+
+            element.textContent = currentValue;
+        }
+
+        function resetScores() {
+            const scores = document.querySelectorAll('.score');
+            scores.forEach(score => {
+                score.textContent = '0';
+            });
+        }
+    </script>
+</body>
+</html>
